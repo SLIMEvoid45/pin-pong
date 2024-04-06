@@ -33,3 +33,4 @@ class Player(GameSprite):
             self.rect.y -= self.speed
         if keys_pressed[K_d] and self.rect.x < 595:
             self.rect.y += self.speed
+#jdkljdlksajlkdsa
