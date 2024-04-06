@@ -29,7 +29,10 @@ class GameSprite(sprite.Sprite):
 class Player(GameSprite):
     def update(self):
         keys_pressed = key.get_pressed()
-        if keys_pressed[K_w] and self.rect.x > 5:
-            self.rect.y -= self.speed
-        if keys_pressed[K_s] and self.rect.x < 595:
-            self.rect.y += self.speed
+        if keys_pressed[K_a] and self.rect.x > 5:
+            self.rect.x -= self.speed
+        if keys_pressed[K_d] and self.rect.x < 595:
+            self.rect.x += self.speed
+while True:
+    print('error: (проэкт не доработан)')
+    
