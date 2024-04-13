@@ -1,4 +1,4 @@
-#сюда вставь Алабай
+#
 from pygame import *
 from random import *
 pygame.init()
