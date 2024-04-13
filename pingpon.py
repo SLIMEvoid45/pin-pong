@@ -1,83 +1,125 @@
-#
 import pygame
-from random import *
+import sys
+import random
+import time
+
+
 pygame.init()
 
-win1 = 900
-win2 = 300
-window = pygame.display.set_mode((win1, win2))
-display.set_caption("ping pon")
-background = pygame.transform.scale(image.load("BACK.png"), (900, 300))
-clock = pygame.time.Clock()
-FPS = 120
-lost = 0
-PLayer_1_score = 0
-Player_2_score = 0
-speed_ball_up = 1
-speed_ball_max = 45
-game = True
-finish = False
 
-class GameSprite(sprite.Sprite):
-    def __init__(self, player_image, player_x, player_y, player_speed):
-        super().__init__()
-        self.image = transform.scale(image.load(player_image), (65, 65))
-        self.speed = player_speed
-        self.rect = self.image.get_rect()
-        self.rect.x = player_x
-        self.rect.y = player_y
-    def reset(self):
-        window.blit(self.image, (self.rect.x, self.rect.y))
-
-class Player(GameSprite):
-    def update(self):
-        keys_pressed = key.get_pressed()
-        if keys_pressed[K_a] and self.rect.x > 5:
-            self.rect.x -= self.speed
-        if keys_pressed[K_d] and self.rect.x < 595:
-            self.rect.x += self.speed
-    def score(self):
-        global PLayer_1_score, PLayer_2_score
+c = pygame.time.Clock()
 
 
+width = 900
+height = 600
 
 
+screen = pygame.display.set_mode((width, height))
+
+pygame.display.set_caption("Ping Pong Game")
 
 
-while gamequit:
-    window.blit(backgroundmain2, (0, 0))
-    window.blit(sparitemain1, (x1, y1))
-    window.blit(sparitemain2, (x2, y2))
+ball = pygame.Rect(width / 2 - 15, height / 2 - 15, 30, 30, )
+player1 = pygame.Rect(width - 20, height / 2 - 70, 10, 140)
+player2 = pygame.Rect(10, height / 2 - 70, 10, 140)
+
+ball_speedx = 6 * random.choice((1, -1))
+ball_speedy = 6 * random.choice((1, -1))
+player1_speed = 0
+player2_speed = 6
+player1_score = 0
+player2_score = 0
+
+
+def ball_movement():
+    global ball_speedx, ball_speedy, player1_score, player2_score
+    ball.x += ball_speedx
+    ball.y += ball_speedy
+
+
+    if ball.top <= 0 or ball.bottom >= height:
+        ball_speedy *= -1
+    if ball.left <= 0:
+        player1_score += 1
+        ball_restart()
+    if ball.right >= width:
+        player2_score += 1
+        ball_restart()
+
+    if ball.colliderect(player1) or ball.colliderect(player2):
+        ball_speedx *= -1
+
+
+def player1_movement():
+    global player1_speed
+    player1.y += player1_speed
+    if player1.top <= 0:
+        player1.top = 0
+    if player1.bottom >= height:
+        player1.bottom = height
+
+
+def player2_movement():
+    global player2_speed
+    if player2.top < ball.y:
+        player2.top += player2_speed
+    if player2.bottom > ball.y:
+        player2.bottom -= player2_speed
+    if player2.top <= 0:
+        player2_top = 0
+    if player2.bottom >= height:
+        player2.bottom = height
+
+
+def ball_restart():
+    global ball_speedx, ball_speedy
+    ball.center = (width / 2, height / 2)
+    ball_speedy *= random.choice((1, -1))
+    ball_speedx *= random.choice((1, -1))
+
+
+font = pygame.font.SysFont("calibri", 25)
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
+                player1_speed += 8
+            if event.key == pygame.K_UP:
+                player1_speed -= 8
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_DOWN:
+                player1_speed -= 8
+            if event.key == pygame.K_UP:
+                player1_speed += 8
+
+    ball_movement()
+    player1_movement()
+    player2_movement()
+
+    if ball.x < 0:
+        player1_score += 1
+    elif ball.x > width:
+        player2_score += 1
+
+
+    screen.fill((0, 0, 0))
+    pygame.draw.rect(screen, (220, 220, 220), player1)
+    pygame.draw.rect(screen, (220, 220, 220), player2)
+    pygame.draw.ellipse(screen, (220, 220, 220), ball)
+    pygame.draw.aaline(screen, (220, 220, 220), (width / 2, 0), (width / 2, height))
+
+
+    player1_text = font.render("Score:" + str(player1_score), False, (255, 255, 255))
+    screen.blit(player1_text, [600, 50])
+    player2_text = font.render("Score:" + str(player2_score), False, (255, 255, 255))
+    screen.blit(player2_text, [300, 50])
+
+
     pygame.display.update()
-    if y1 < 470:
-        y1 += speed 
-    if pygame.key.get_pressed()[pygame.K_RIGHT] and x1 < 670:
-        
-        x1 += speed
-        print(x1)
-    if pygame.key.get_pressed()[pygame.K_LEFT] and x1 > 5:
-        x1 -= speed
-        print(x1)
-    if pygame.key.get_pressed()[pygame.K_UP] and y1 > 5:
-        y1 -= speed
-        print(y1)
-    if pygame.key.get_pressed()[pygame.K_DOWN] and y1 < 470:
-        y1 += speed
-        print(y1)
 
-    if pygame.key.get_pressed()[pygame.K_d] and x2 < 650:
-        x2 += speed
-        print(x2)
-    if pygame.key.get_pressed()[pygame.K_a] and x2 > 5:
-        x2 -= speed
-        print(x2)
-    if pygame.key.get_pressed()[pygame.K_w] and y2 > 5:
-        y2 -= speed
-        print(y2)
-    if pygame.key.get_pressed()[pygame.K_s] and y2 < 470:
-        y2 += speed
-        print(y2)
 
-    for w in pygame.event.get():
-        if w.type == pygame.QUIT:
-            gamequit = False
+    c.tick(60)
