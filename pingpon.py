@@ -7,7 +7,7 @@ win1 = 700
 win2 = 500
 window = display.set_mode((win1, win2))
 display.set_caption("ping pon")
-background = transform.scale(image.load("great niggas battle in the basement.jpg"), (700, 500))
+background = transform.scale(image.load("BACK.png"), (700, 500))
 clock = time.Clock()
 FPS = 120
 lost = 0
