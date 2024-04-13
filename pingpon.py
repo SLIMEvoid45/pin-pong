@@ -33,6 +33,40 @@ class Player(GameSprite):
             self.rect.x -= self.speed
         if keys_pressed[K_d] and self.rect.x < 595:
             self.rect.x += self.speed
-while True:
-    print('error: (проэкт не доработан)')
-    
+while gamequit:
+    window.blit(backgroundmain2, (0, 0))
+    window.blit(sparitemain1, (x1, y1))
+    window.blit(sparitemain2, (x2, y2))
+    pygame.display.update()
+    if y1 < 470:
+        y1 += speed 
+    if pygame.key.get_pressed()[pygame.K_RIGHT] and x1 < 670:
+        
+        x1 += speed
+        print(x1)
+    if pygame.key.get_pressed()[pygame.K_LEFT] and x1 > 5:
+        x1 -= speed
+        print(x1)
+    if pygame.key.get_pressed()[pygame.K_UP] and y1 > 5:
+        y1 -= speed
+        print(y1)
+    if pygame.key.get_pressed()[pygame.K_DOWN] and y1 < 470:
+        y1 += speed
+        print(y1)
+
+    if pygame.key.get_pressed()[pygame.K_d] and x2 < 650:
+        x2 += speed
+        print(x2)
+    if pygame.key.get_pressed()[pygame.K_a] and x2 > 5:
+        x2 -= speed
+        print(x2)
+    if pygame.key.get_pressed()[pygame.K_w] and y2 > 5:
+        y2 -= speed
+        print(y2)
+    if pygame.key.get_pressed()[pygame.K_s] and y2 < 470:
+        y2 += speed
+        print(y2)
+
+    for w in pygame.event.get():
+        if w.type == pygame.QUIT:
+            gamequit = False
