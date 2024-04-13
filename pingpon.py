@@ -3,15 +3,18 @@ import pygame
 from random import *
 pygame.init()
 
-win1 = 700
-win2 = 500
+win1 = 900
+win2 = 300
 window = pygame.display.set_mode((win1, win2))
 display.set_caption("ping pon")
-background = pygame.transform.scale(image.load("BACK.png"), (700, 500))
+background = pygame.transform.scale(image.load("BACK.png"), (900, 300))
 clock = pygame.time.Clock()
 FPS = 120
 lost = 0
-score = 0
+PLayer_1_score = 0
+Player_2_score = 0
+speed_ball_up = 1
+speed_ball_max = 45
 game = True
 finish = False
 
@@ -33,6 +36,14 @@ class Player(GameSprite):
             self.rect.x -= self.speed
         if keys_pressed[K_d] and self.rect.x < 595:
             self.rect.x += self.speed
+    def score(self):
+        global PLayer_1_score, PLayer_2_score
+
+
+
+
+
+
 while gamequit:
     window.blit(backgroundmain2, (0, 0))
     window.blit(sparitemain1, (x1, y1))
