@@ -9,27 +9,21 @@ pygame.init()
 
 c = pygame.time.Clock()
 
-
-width = 900
-height = 600
-
-
+#CONFIG
+width = 1900
+height = 1000
 screen = pygame.display.set_mode((width, height))
-
-pygame.display.set_caption("Ping Pong Game")
-
-
+pygame.display.set_caption("Ping Pon")
 ball = pygame.Rect(width / 2 - 15, height / 2 - 15, 30, 30, )
 player1 = pygame.Rect(width - 20, height / 2 - 70, 10, 140)
 player2 = pygame.Rect(10, height / 2 - 70, 10, 140)
-
-ball_speedx = 6 * random.choice((1, -1))
-ball_speedy = 6 * random.choice((1, -1))
+ball_speedx = 8 * random.choice((1, -1))
+ball_speedy = 8 * random.choice((1, -1))
 player1_speed = 0
-player2_speed = 6
+player2_speed = 8
 player1_score = 0
 player2_score = 0
-
+#CONFIG END
 
 def ball_movement():
     global ball_speedx, ball_speedy, player1_score, player2_score
@@ -110,12 +104,16 @@ while True:
     pygame.draw.rect(screen, (220, 220, 220), player1)
     pygame.draw.rect(screen, (220, 220, 220), player2)
     pygame.draw.ellipse(screen, (220, 220, 220), ball)
-    pygame.draw.aaline(screen, (220, 220, 220), (width / 2, 0), (width / 2, height))
+    if player1_score == 15:
+        pygame.quit()
+        sys.exit()
+    if player2_score == 15:
+        pygame.quit()
+        sys.exit()
 
-
-    player1_text = font.render("Score:" + str(player1_score), False, (255, 255, 255))
+    player1_text = font.render("Score P1:" + str(player1_score), False, (255, 255, 255))
     screen.blit(player1_text, [600, 50])
-    player2_text = font.render("Score:" + str(player2_score), False, (255, 255, 255))
+    player2_text = font.render("Score P2:" + str(player2_score), False, (255, 255, 255))
     screen.blit(player2_text, [300, 50])
 
 
